@@ -1,42 +1,76 @@
-﻿using System;
+using System;
+using System.Collections;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-        Console.WriteLine("Enter 10 integers:");
-
-
-        for (int i = 0; i < 10; i++)
+        int array_size = 1;
+        ArrayList Numbers = new ArrayList();
+        Console.BackgroundColor = ConsoleColor.Yellow;
+        Console.ForegroundColor = ConsoleColor.Black;
+        Console.WriteLine("\nWelcome to the Second Largest Number Finder!");
+        Console.ResetColor();
+        while (true)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
+            Console.WriteLine("\nFor Exit Press 'Enter key'");
+            Console.WriteLine("\t(or)");
+            Console.WriteLine($"Enter the Number {array_size}:");
+            string number_instring = Console.ReadLine();
+            if (string.IsNullOrEmpty(number_instring))
+            {
+                break;
+            }
+            bool number_condition = int.TryParse(number_instring, out int number);
+            if (number_condition)
+            {
+                Numbers.Add(number);
+                array_size++;
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("\n**Please enter a valid number**");
+                Console.ResetColor();
+
+
+            }
+           
         }
 
-        int largest = int.MinValue;
-        int secondLargest = int.MinValue;
+        int largest_number = int.MinValue;
+        int second_largest_number = int.MinValue;
 
-        for (int i = 0; i < numbers.Length; i++)
+        foreach (int element in Numbers)
         {
-            if (numbers[i] > largest)
+            if (element > largest_number)
             {
-                secondLargest = largest;
-                largest = numbers[i];
+                second_largest_number = largest_number;
+                largest_number = element;
+                
             }
 
-            else if (numbers[i] > secondLargest && numbers[i] < largest)
+            else if (element > second_largest_number && element < largest_number)
             {
-                secondLargest = numbers[i];
+                second_largest_number = element;
             }
         }
 
-        if (secondLargest == int.MinValue)
+        if (second_largest_number == int.MinValue)
         {
-            Console.WriteLine("There is no second largest unique number.");
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n**There is no second largest unique number**");
+            Console.ResetColor();
         }
         else
         {
-            Console.WriteLine("The second largest number is: " + secondLargest);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\nThe second largest number is: " + second_largest_number);
+            Console.ResetColor();
         }
     }
+
 }
+
+
